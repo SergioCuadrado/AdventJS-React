@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./styles/App.css";
 
-function App() {
+const App = () => {
+  const [value, setValue] = useState("");
+  const [regalos, setRegalos] = useState([]);
+  const ValorRegalo = (e) => {
+    setValue(e.target.value);
+  };
+
+  const sendData = (e) => {
+    e.preventDefault();
+    if (value.length > 0) {
+      setRegalos([...regalos, value]);
+    }
+  };
+
+  const eliminarRegalo = (idx) => {
+    setRegalos(regalos.filter((item, key) => key !== idx));
+  };
+
+  const borrarTodo = () => {
+    setRegalos([]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="App">
+      <div className="App_regalos">
+        <h1>Regalos:</h1>
+        <div className="App_inputs">
+          <input
+            placeholder="Añade tus regalos"
+            type="text"
+            autoFocus
+            onChange={(e) => ValorRegalo(e)}
+          />
+          <button onClick={(e) => sendData(e)}>Agregar</button>
+        </div>
+        <ul className="App_listaRegalos">
+          {regalos.length > 0 ? (
+            regalos.map((regalo, idx) => (
+              <div className="App_listaRegalos-div" key={idx}>
+                <li>🎁 {regalo}</li>
+                <button onClick={() => eliminarRegalo(idx)}>❌</button>
+              </div>
+            ))
+          ) : (
+            <p>Añade algun regalo 😢</p>
+          )}
+        </ul>
+        {regalos.length > 0 && (
+          <button
+            className="App_listaRegalos-buttonEliminarTodo"
+            onClick={borrarTodo}
+          >
+            Borrar todo
+          </button>
+        )}
+      </div>
+    </section>
   );
-}
+};
 
 export default App;
