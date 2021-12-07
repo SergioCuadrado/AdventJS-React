@@ -17,7 +17,7 @@ button:hover {
   flex-direction: column;
   place-content: center;
   place-items: center;
-  background-image: url("../christmas.jpg");
+  background-image: url("../images/christmas.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }

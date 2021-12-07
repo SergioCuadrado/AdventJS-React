@@ -1,16 +1,18 @@
 import { useState } from "react";
-import "./styles/App.css";
+import "./public/styles/App.css";
 
 const App = () => {
   const [value, setValue] = useState("");
   const [regalos, setRegalos] = useState([]);
+
   const ValorRegalo = (e) => {
     setValue(e.target.value);
   };
 
-  const sendData = (e) => {
+  const incluirRegalo = (e) => {
     e.preventDefault();
-    if (value.length > 0) {
+    const existe = regalos.filter((item) => item === value);
+    if (value.length > 0 && existe.length === 0) {
       setRegalos([...regalos, value]);
     }
   };
@@ -27,6 +29,7 @@ const App = () => {
     <section className="App">
       <div className="App_regalos">
         <h1>Regalos:</h1>
+
         <div className="App_inputs">
           <input
             placeholder="Añade tus regalos"
@@ -34,8 +37,9 @@ const App = () => {
             autoFocus
             onChange={(e) => ValorRegalo(e)}
           />
-          <button onClick={(e) => sendData(e)}>Agregar</button>
+          <button onClick={(e) => incluirRegalo(e)}>Agregar</button>
         </div>
+
         <ul className="App_listaRegalos">
           {regalos.length > 0 ? (
             regalos.map((regalo, idx) => (
@@ -45,9 +49,10 @@ const App = () => {
               </div>
             ))
           ) : (
-            <p>Añade algun regalo 😢</p>
+            <p>Añade algún regalo 😢</p>
           )}
         </ul>
+
         {regalos.length > 0 && (
           <button
             className="App_listaRegalos-buttonEliminarTodo"
