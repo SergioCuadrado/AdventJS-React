@@ -1,0 +1,18 @@
+.App_inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.App_inputs input {
+  height: 30px;
+  padding-left: 8px;
+  margin-right: 5px;
+}
+
+.App_inputs .App_inputs-regalos {
+  width: 210px;
+}
+
+.App_inputs .App_inputs-cantidad {
+  width: 35px;
+}

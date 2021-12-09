@@ -47,17 +47,6 @@ button:hover {
   line-height: 1.6;
 }
 
-.App_inputs {
-  display: flex;
-  justify-content: space-between;
-}
-
-.App_regalos input {
-  height: 30px;
-  width: 210px;
-  padding-left: 8px;
-}
-
 .App_regalos button {
   height: 35px;
 }

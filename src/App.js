@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import CreateGift from "./components/CreateGift";
 import "./public/styles/App.css";
 
 const App = () => {
-  const [value, setValue] = useState("");
   const [regalos, setRegalos] = useState([]);
+  const regalosLocalStorage = JSON.parse(localStorage.getItem("regalos"));
 
-  const ValorRegalo = (e) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    if (regalosLocalStorage.length > 0) {
+      setRegalos(regalosLocalStorage);
+    }
+  }, []);
 
-  const incluirRegalo = (e) => {
-    e.preventDefault();
-    const existe = regalos.filter((item) => item === value);
-    if (value.length > 0 && existe.length === 0) {
-      setRegalos([...regalos, value]);
+  const añadirRegalo = (regalo) => {
+    const existe = regalos.filter(
+      (item) => item.producto.toLowerCase() === regalo.producto.toLowerCase()
+    );
+
+    // Validando si el regalo no existe
+    if (existe.length === 0) {
+      setRegalos([...regalos, regalo]);
+      localStorage.setItem("regalos", JSON.stringify([...regalos, regalo]));
     }
   };
 
+  // Eliminar el regalo que quiera el usuario
   const eliminarRegalo = (idx) => {
     setRegalos(regalos.filter((item, key) => key !== idx));
+
+    regalosLocalStorage.splice(idx, 1);
+    localStorage.setItem("regalos", JSON.stringify(regalosLocalStorage));
   };
 
+  // Eliminar todos los regalos de golpe
   const borrarTodo = () => {
     setRegalos([]);
+    localStorage.setItem("regalos", JSON.stringify([]));
   };
 
   return (
@@ -30,21 +43,15 @@ const App = () => {
       <div className="App_regalos">
         <h1>Regalos:</h1>
 
-        <div className="App_inputs">
-          <input
-            placeholder="Añade tus regalos"
-            type="text"
-            autoFocus
-            onChange={(e) => ValorRegalo(e)}
-          />
-          <button onClick={(e) => incluirRegalo(e)}>Agregar</button>
-        </div>
+        <CreateGift añadirRegalo={añadirRegalo} />
 
         <ul className="App_listaRegalos">
           {regalos.length > 0 ? (
             regalos.map((regalo, idx) => (
               <div className="App_listaRegalos-div" key={idx}>
-                <li>🎁 {regalo}</li>
+                <li>
+                  🎁 {regalo.cantidad} {regalo.producto}
+                </li>
                 <button onClick={() => eliminarRegalo(idx)}>❌</button>
               </div>
             ))
