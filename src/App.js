@@ -50,7 +50,8 @@ const App = () => {
             regalos.map((regalo, idx) => (
               <div className="App_listaRegalos-div" key={idx}>
                 <li>
-                  🎁 {regalo.cantidad} {regalo.producto}
+                  🎁 <img src={regalo.imagen} alt={regalo.producto} />{" "}
+                  {regalo.cantidad}x {regalo.producto}
                 </li>
                 <button onClick={() => eliminarRegalo(idx)}>❌</button>
               </div>

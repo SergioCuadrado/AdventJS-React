@@ -4,10 +4,15 @@ import "../public/styles/components/CreateGift.css";
 const CreateGift = (props) => {
   const [cantidad, setCantidad] = useState(1);
   const [regalo, setRegalo] = useState("");
+  const [imagen, setImagen] = useState("");
 
   // Lo que el usuario esta escribiendo en el input
   const valorRegalo = (e) => {
     setRegalo(e.target.value);
+  };
+
+  const valorImagen = (e) => {
+    setImagen(e.target.value);
   };
 
   const valorCantidad = (e) => {
@@ -19,9 +24,10 @@ const CreateGift = (props) => {
     e.preventDefault();
     // Validando si el usuario no ha dejado el input vacio
     if (regalo.length > 0) {
-      props.añadirRegalo({ producto: regalo, cantidad });
+      props.añadirRegalo({ producto: regalo, cantidad, imagen });
       // Reiniciando los inputs
       setRegalo("");
+      setImagen("");
       setCantidad(1);
     }
   };
@@ -35,6 +41,13 @@ const CreateGift = (props) => {
         autoFocus
         onChange={(e) => valorRegalo(e)}
         value={regalo}
+      />
+      <input
+        className="App_inputs-imagen"
+        type="text"
+        placeholder="http://image"
+        onChange={(e) => valorImagen(e)}
+        value={imagen}
       />
       <input
         className="App_inputs-cantidad"

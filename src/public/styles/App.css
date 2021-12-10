@@ -9,6 +9,11 @@ button:hover {
   background: #005fb1;
 }
 
+img {
+  height: 35px;
+  vertical-align: bottom;
+}
+
 .App {
   text-align: center;
   height: 100vh;
@@ -44,6 +49,7 @@ button:hover {
 }
 
 .App_regalos li {
+  height: 35px;
   line-height: 1.6;
 }
 
@@ -52,10 +58,11 @@ button:hover {
 }
 
 .App_listaRegalos-div {
+  height: 35px;
+  width: 100%;
   margin: 5px 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .App_listaRegalos-buttonEliminarTodo {
