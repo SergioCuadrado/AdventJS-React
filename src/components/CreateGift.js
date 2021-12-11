@@ -56,7 +56,6 @@ const CreateGift = (props) => {
         value={cantidad}
         onChange={(e) => valorCantidad(e)}
         min={1}
-        max={50}
       />
       <button type="submit">Agregar</button>
     </form>

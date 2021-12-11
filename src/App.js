@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import CreateGift from "./components/CreateGift";
+import Modal from "react-modal";
+
 import "./public/styles/App.css";
+
+const customStyles = {
+  content: {
+    top: "15%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 const App = () => {
   const [regalos, setRegalos] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   const regalosLocalStorage = JSON.parse(localStorage.getItem("regalos"));
 
   useEffect(() => {
@@ -38,12 +53,32 @@ const App = () => {
     localStorage.setItem("regalos", JSON.stringify([]));
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <section className="App">
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        ariaHideApp={false}
+        style={customStyles}
+        contentLabel="Añadir regalo"
+      >
+        <CreateGift añadirRegalo={añadirRegalo} />
+      </Modal>
+
       <div className="App_regalos">
         <h1>Regalos:</h1>
 
-        <CreateGift añadirRegalo={añadirRegalo} />
+        <button className="App_regalos-buttonModal" onClick={openModal}>
+          Agregar regalo
+        </button>
 
         <ul className="App_listaRegalos">
           {regalos.length > 0 ? (
