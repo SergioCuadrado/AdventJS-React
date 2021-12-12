@@ -86,7 +86,12 @@ const App = () => {
               <div className="App_listaRegalos-div" key={idx}>
                 <li>
                   🎁 <img src={regalo.imagen} alt={regalo.producto} />{" "}
-                  {regalo.cantidad}x {regalo.producto}
+                  <p>
+                    {regalo.cantidad}x {regalo.producto}
+                    <span className="App_listaRegalos-destinatario">
+                      {regalo.destinatario}
+                    </span>
+                  </p>
                 </li>
                 <button onClick={() => eliminarRegalo(idx)}>❌</button>
               </div>
