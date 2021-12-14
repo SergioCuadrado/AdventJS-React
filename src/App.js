@@ -3,6 +3,7 @@ import CreateGift from "./components/CreateGift";
 import Modal from "react-modal";
 
 import "./public/styles/App.css";
+import EditGift from "./components/EditGift";
 
 const customStyles = {
   content: {
@@ -17,7 +18,9 @@ const customStyles = {
 
 const App = () => {
   const [regalos, setRegalos] = useState([]);
+  const [modificarRegalo, setModificarRegalo] = useState({});
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpenEdit, setIsOpenEdit] = useState(false);
 
   const regalosLocalStorage = JSON.parse(localStorage.getItem("regalos"));
 
@@ -39,6 +42,21 @@ const App = () => {
     }
   };
 
+  const editarRegalo = (regalo) => {
+    let objIndex = regalos.findIndex(
+      (obj) => obj.producto === modificarRegalo.producto
+    );
+
+    //Update object's name property.
+    regalos[objIndex].producto = regalo.producto;
+    regalos[objIndex].destinatario = regalo.destinatario;
+    regalos[objIndex].imagen = regalo.imagen;
+    regalos[objIndex].cantidad = regalo.cantidad;
+
+    console.log(regalos);
+    localStorage.setItem("regalos", JSON.stringify([...regalos]));
+  };
+
   // Eliminar el regalo que quiera el usuario
   const eliminarRegalo = (idx) => {
     setRegalos(regalos.filter((item, key) => key !== idx));
@@ -57,9 +75,18 @@ const App = () => {
     setIsOpen(true);
   };
 
-  function closeModal() {
+  const openModalEdit = (regalo, idx) => {
+    setIsOpenEdit(true);
+    setModificarRegalo(regalo);
+  };
+
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
+
+  const closeModalEdit = () => {
+    setIsOpenEdit(false);
+  };
 
   return (
     <section className="App">
@@ -71,6 +98,19 @@ const App = () => {
         contentLabel="Añadir regalo"
       >
         <CreateGift añadirRegalo={añadirRegalo} />
+      </Modal>
+
+      <Modal
+        isOpen={modalIsOpenEdit}
+        onRequestClose={closeModalEdit}
+        ariaHideApp={false}
+        style={customStyles}
+        contentLabel="Editar regalo"
+      >
+        <EditGift
+          modificarRegalo={modificarRegalo}
+          editarRegalo={editarRegalo}
+        />
       </Modal>
 
       <div className="App_regalos">
@@ -93,7 +133,10 @@ const App = () => {
                     </span>
                   </p>
                 </li>
-                <button onClick={() => eliminarRegalo(idx)}>❌</button>
+                <div className="App_listaRegalos-botones">
+                  <button onClick={() => openModalEdit(regalo, idx)}>E</button>
+                  <button onClick={() => eliminarRegalo(idx)}>❌</button>
+                </div>
               </div>
             ))
           ) : (

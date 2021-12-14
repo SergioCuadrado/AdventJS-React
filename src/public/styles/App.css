@@ -113,3 +113,7 @@ img {
 .App_listaRegalos-buttonEliminarTodo {
   width: 100%;
 }
+
+.App_listaRegalos-botones button:first-child {
+  margin-right: 5px;
+}
